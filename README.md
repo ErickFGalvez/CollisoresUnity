@@ -8,8 +8,7 @@ Devem ser utilizados todos os tipos de colisões e Triggers.
 ## Requisitos
 Para ver essa cena é preciso o Unity com a versão 2021.3.22f1
 
-Instalação 1.clonar o projeto https://drive.google.com/drive/folders/1UZ2YLxzUxkh-FLOlIS-Wths-19ogzK32?usp=drive_link 
-
+Instalação 1.clonar o projeto https://drive.google.com/drive/folders/1h3fFJeS34VI-l1yPLDFdG9_FqDgm_EwN?usp=drive_link
 
 2.Abrir o projeto no Unity.
 
