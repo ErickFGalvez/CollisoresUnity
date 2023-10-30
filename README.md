@@ -8,7 +8,9 @@ Devem ser utilizados todos os tipos de colisões e Triggers.
 ## Requisitos
 Para ver essa cena é preciso o Unity com a versão 2021.3.26f1
 
-Instalação 1.clonar o projeto 
+Instalação
+
+1.clonar o projeto https://drive.google.com/file/d/1Y0QVC0mwyicHWL6bXEp-ZMg1ArhU51tn/view?usp=drive_link
 
 2.Abrir o projeto no Unity.
 
@@ -177,5 +179,5 @@ O método Update() é chamado a cada quadro do jogo. Nele, o script calcula um d
 
 ## Video Do unity Funcionando
 
-https://youtu.be/8NYcW7FkrCQ
+https://youtu.be/VM1EX-9Nk-k
 
