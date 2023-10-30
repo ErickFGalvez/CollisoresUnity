@@ -18,11 +18,15 @@ Desenvolvimento
 
 Para criar esse projeto foram utilizados os seguintes passos:
 
-Criar 3 game objects 1 espera,2 cubo e uma superficie plana.
+Criar 4 game objects 1 espera,2 cubo e uma superficie plana.
 
-3. Criar o Script CollisionEvents.
+![Captura de tela 2023-10-30 163709](https://github.com/ErickFGalvez/CollisoresUnity/assets/128325280/1eb241e7-58b7-4394-bd0c-e97702eb2374)
 
-## segue o codigo comentado e uma explicaçao rapida
+3. Criar 2 Scripts CollisionEvents e MovimentoCubo.
+
+![Captura de tela 2023-10-30 163730](https://github.com/ErickFGalvez/CollisoresUnity/assets/128325280/6f20457a-f9da-4b8d-b003-7e02b271758d)
+
+## segue o codigo comentado e uma explicaçao rapida do CollisionEvents.
 
 O CollisionEvents é um script Unity que fornece funcionalidade para lidar com eventos de colisão e acionar ações com base nessas colisões. Ele também é responsável por alterar a cor do objeto no qual está anexado e ativar um Canvas de Fim de Cena quando uma determinada condição é atendida.
 
@@ -125,9 +129,8 @@ public class CollisionEvents : MonoBehaviour
     }
 }
 
-4. Criar o Script  MovimentoCubo.
 
-## segue o codigo comentado e uma explicaçao rapida
+## segue o codigo comentado e uma explicaçao rapida do MovimentoCubo.
 
 O MovimentoCubo é um script Unity que controla o movimento vertical de um cubo. Ele faz o cubo se mover para cima e para baixo de forma oscilante com base no tempo.
 
