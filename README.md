@@ -6,9 +6,9 @@ Atividade passada pela orientadora Aline Firmino, Desenvolver uma cena aplicado 
 Devem ser utilizados todos os tipos de colisões e Triggers.
 
 ## Requisitos
-Para ver essa cena é preciso o Unity com a versão 2021.3.22f1
+Para ver essa cena é preciso o Unity com a versão 2021.3.26f1
 
-Instalação 1.clonar o projeto https://drive.google.com/drive/folders/1h3fFJeS34VI-l1yPLDFdG9_FqDgm_EwN?usp=drive_link
+Instalação 1.clonar o projeto 
 
 2.Abrir o projeto no Unity.
 
@@ -16,92 +16,162 @@ Desenvolvimento
 
 Para criar esse projeto foram utilizados os seguintes passos:
 
-Criar 3 game objects 1 espera,1 cubo e uma superficie plana.
+Criar 3 game objects 1 espera,2 cubo e uma superficie plana.
 
 3. Criar o Script CollisionEvents.
 
 ## segue o codigo comentado e uma explicaçao rapida
 
-Importação do Script: Adicione o script CollisionEvents.cs a um GameObject em sua cena do Unity.
+O CollisionEvents é um script Unity que fornece funcionalidade para lidar com eventos de colisão e acionar ações com base nessas colisões. Ele também é responsável por alterar a cor do objeto no qual está anexado e ativar um Canvas de Fim de Cena quando uma determinada condição é atendida.
 
-Configuração de Variáveis:
+Como Usar
+Anexando o Script:
 
-FimDaSenaCanvas: Configure essa variável no Inspector do Unity para se referir ao GameObject que contém o Canvas que você deseja ativar quando um evento específico ocorre.
-Eventos de Colisão:
+Anexe o script CollisionEvents.cs a qualquer objeto que deseja monitorar colisões. Certifique-se de que o objeto tenha um Collider (por exemplo, um Collider de caixa) para ativar eventos de colisão.
 
-OnCollisionEnter: Este evento é acionado quando a colisão começa.
-OnCollisionExit: Este evento é acionado quando a colisão termina.
-OnCollisionStay: Este evento é acionado enquanto a colisão está em andamento.
+Configurações no Inspector:
 
-Eventos de Gatilho:
+No Inspector do objeto ao qual você anexou o script, você pode configurar as seguintes variáveis públicas:
 
-OnTriggerEnter: Este evento é acionado quando um objeto entra em um trigger.
+FimDaSenaCanvas (Fim da Cena Canvas): Arraste o GameObject que representa o Canvas que você deseja ativar quando a condição for atendida.
+
+Texto: Arraste o componente Text que você deseja ativar juntamente com o Canvas no Fim da Cena.
+
+Personalização:
+
+Você pode personalizar as condições de colisão e as ações realizadas em resposta a essas colisões. O script atual inclui os seguintes métodos:
+
+OnCollisionEnter: Chamado quando uma colisão começa.
+OnCollisionExit: Chamado quando uma colisão termina.
+OnCollisionStay: Chamado enquanto uma colisão está em andamento.
+OnTriggerEnter: Chamado quando um objeto entra em um Trigger Collider.
 
 ## codigo
 
-public GameObject FimDaSenaCanvas; 
+using UnityEngine;
 
-// Este é um campo público que permite referenciar um objeto Canvas no Unity Inspector.
-
-void OnCollisionEnter(Collision collision)
+public class CollisionEvents : MonoBehaviour
 {
-    if (collision.gameObject.name == "Cube")
+    public GameObject FimDaSenaCanvas; // Referência a um Canvas que será ativado no final
+    public Text texto; // Referência a um componente Text que será ativado no final
+
+    void Start(){
+        // Desativa o Canvas no início do jogo
+        FimDaSenaCanvas.SetActive(false);
+        
+        // Desativa o componente Text no início do jogo
+        texto.enabled = false;
+    }
+
+    void OnCollisionEnter(Collision collision)
     {
-        // Este método é chamado quando um objeto colide com este objeto.
-        // Verifica se o objeto que colidiu tem o nome "Cube".
-        Debug.Log("Enter");
-        // Registra uma mensagem de log "Enter".
-        GetComponent<Renderer>().material.color = Color.red;
-        // Muda a cor do objeto atual para vermelho quando uma colisão com "Cube" começa.
+        // Este método é chamado quando uma colisão começa
+        if (collision.gameObject.name == "Cube")
+        {
+            Debug.Log("Enter"); // Registra uma mensagem no console
+
+            // Muda a cor do objeto atual para vermelho
+            GetComponent<Renderer>().material.color = Color.red;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        // Este método é chamado quando uma colisão termina
+        if (collision.gameObject.name == "Cube")
+        {
+            Debug.Log("Exit"); // Registra uma mensagem no console
+
+            // Muda a cor do objeto atual para verde
+            GetComponent<Renderer>().material.color = Color.green;
+        }
+    }
+
+    public void FimDaCena()
+    {
+        // Este método pode ser chamado de fora do script
+        if (FimDaSenaCanvas != null)
+        {
+            // Ativa o Canvas de Fim da Cena
+            FimDaSenaCanvas.SetActive(true);
+            
+            // Ativa o componente Text
+            texto.enabled = true; 
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        // Este método é chamado enquanto uma colisão está em andamento
+        if (collision.gameObject.name == "Cube")
+        {
+            Debug.Log("Stay"); // Registra uma mensagem no console
+
+            // Faz o objeto atual girar no eixo Z com uma taxa específica
+            collision.transform.localEulerAngles += new Vector3(0, 0, -10) * Time.deltaTime;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // Este método é chamado quando um objeto entra em um Trigger Collider
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            // Chama o método FimDaCena para ativar o Canvas e o Text
+            FimDaCena();
+        }
     }
 }
 
-void OnCollisionExit(Collision collision)
+4. Criar o Script  MovimentoCubo.
+
+## segue o codigo comentado e uma explicaçao rapida
+
+O MovimentoCubo é um script Unity que controla o movimento vertical de um cubo. Ele faz o cubo se mover para cima e para baixo de forma oscilante com base no tempo.
+
+Como Usar
+Anexando o Script:
+
+Anexe o script MovimentoCubo.cs a um objeto no Unity. Esse objeto será o cubo que você deseja mover verticalmente.
+
+Configurações no Inspector:
+
+No Inspector do objeto ao qual você anexou o script, você pode configurar as seguintes variáveis públicas:
+
+Velocidade: Defina a velocidade com a qual o cubo se moverá para cima e para baixo.
+
+Distância Máxima: Especifique a distância máxima que o cubo percorrerá em sua oscilação vertical.
+
+Posição Inicial:
+
+O script armazena a posição inicial do cubo no momento do início do jogo. Isso é feito no método Start(). Certifique-se de que o cubo está na posição desejada quando você inicia a cena.
+
+Movimento Vertical Oscilante:
+
+O método Update() é chamado a cada quadro do jogo. Nele, o script calcula um deslocamento vertical baseado no tempo e atualiza a posição do cubo em relação à posição inicial. Isso cria um movimento vertical oscilante.
+
+** public class MovimentoCubo : MonoBehaviour
 {
-    if (collision.gameObject.name == "Cube")
+    public float velocidade = 2.0f; // A velocidade de movimento do cubo
+    public float distanciaMaxima = 2.0f; // A distância máxima que o cubo vai percorrer para cima e para baixo
+    private Vector3 posicaoInicial; // A posição inicial do cubo
+
+    void Start()
     {
-        // Este método é chamado quando a colisão com "Cube" termina.
-        // Verifica se o objeto que colidiu tem o nome "Cube".
-        Debug.Log("Exit");
-        // Registra uma mensagem de log "Exit".
-        GetComponent<Renderer>().material.color = Color.green;
-        // Muda a cor do objeto atual para verde quando a colisão com "Cube" termina.
+        // Armazena a posição inicial do cubo
+        posicaoInicial = transform.position;
+    }
+
+    void Update()
+    {
+        // Calcula o deslocamento vertical com base no tempo
+        float deslocamentoVertical = Mathf.Sin(Time.time * velocidade) * distanciaMaxima;
+
+        // Atualiza a posição do cubo
+        transform.position = posicaoInicial + new Vector3(0, deslocamentoVertical, 0);
     }
 }
 
-public void FimDaCena()
-{
-    if (FimDaSenaCanvas != null)
-    {
-        // Este método é público e pode ser chamado para mostrar o Canvas associado.
-        // Verifica se a variável FimDaSenaCanvas não é nula.
-        FimDaSenaCanvas.SetActive(true);
-        // Ativa o objeto Canvas, tornando-o visível na cena.
-    }
-}
-
-void OnCollisionStay(Collision collision)
-{
-    if (collision.gameObject.name == "Cube")
-    {
-        // Este método é chamado continuamente enquanto a colisão com "Cube" está ocorrendo.
-        // Verifica se o objeto que colidiu tem o nome "Cube".
-        Debug.Log("Stay");
-        // Registra uma mensagem de log "Stay".
-        collision.transform.localEulerAngles += new Vector3(0, 0, -10) * Time.deltaTime;
-        // Rotaciona o objeto que colidiu com "Cube" continuamente.
-    }
-}
-
-void OnTriggerEnter(Collider trigger)
-{
-    if (trigger.CompareTag("esfera"))
-    {
-        // Este método é chamado quando um objeto com a tag "esfera" entra em um trigger.
-        FimDaCena();
-        // Chama o método FimDaCena para mostrar o Canvas associado.
-    }
-}
 
 ## Video Do unity Funcionando
 
