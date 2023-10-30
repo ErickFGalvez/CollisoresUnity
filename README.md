@@ -150,6 +150,8 @@ Movimento Vertical Oscilante:
 
 O método Update() é chamado a cada quadro do jogo. Nele, o script calcula um deslocamento vertical baseado no tempo e atualiza a posição do cubo em relação à posição inicial. Isso cria um movimento vertical oscilante.
 
+## codigo
+
 ** public class MovimentoCubo : MonoBehaviour
 {
     public float velocidade = 2.0f; // A velocidade de movimento do cubo
